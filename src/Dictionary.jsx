@@ -1,8 +1,10 @@
     import React from "react";
     import { useState, useRef, useEffect } from "react";
+    import { words } from "./words";
 
     const Dictionary = () => {
     const [dictionaryData, setDictionaryData] = useState([]);
+    const [word , setWord] = useState("")
     const inputRef = useRef(null);
     const [error, setError] = useState("")
 
@@ -36,14 +38,24 @@
         }
     }
 
+    const wordOfTheDay = () => {
+        const randomIndex = Math.floor(Math.random() * words.length)
+        setWord(words[randomIndex])
+    };
+    setTimeout(() => {
+        wordOfTheDay()
+    }, 86400000)
+
     useEffect(() => {
         searchWord();
     }, []);
 
     return (
         <div>
+             <h2 className="word-of-the-day">Word of the Day is {word ? word : "Chagrin"}</h2>
         <div className="container">
             <h1>English Dictionary</h1>
+           
             <input onKeyDown={(e) => enterFunction(e)} ref={inputRef} type="text" placeholder="Search for a word" />
             <button onClick={searchWord}>🔎</button>
             {dictionaryData.length > 0  ? (

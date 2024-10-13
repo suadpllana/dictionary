@@ -1,5 +1,6 @@
 body{
     background-color: rgb(201, 189, 189);
+    font-family: cursive, Arial, Helvetica, sans-serif;
 }
 
 
@@ -11,7 +12,7 @@ body{
     margin-top: 5rem;
     text-align: center;
   
-    font-family: cursive, Arial, Helvetica, sans-serif;
+ 
     height: auto;
  
 }
@@ -59,6 +60,9 @@ flex-wrap: wrap;
 h2{
     margin-bottom: 10px;
 }
+.word-of-the-day{
+    text-align: center;
+    }
 @media (max-width: 767px){
     .container{
         width: 100%;
