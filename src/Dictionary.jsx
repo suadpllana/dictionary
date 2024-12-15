@@ -4,7 +4,16 @@
 
     const Dictionary = () => {
     const [dictionaryData, setDictionaryData] = useState([]);
-    const [word , setWord] = useState("")
+    const [word , setWord] = useState(() => {
+        const savedWord = localStorage.getItem("dictionaryWord")
+        return savedWord ? JSON.parse(savedWord) : ""
+    })
+
+    useEffect(() => {
+        localStorage.setItem("dictionaryWord" , JSON.stringify(word) )
+    } , [word])
+
+       
     const inputRef = useRef(null);
     const [error, setError] = useState("")
 
@@ -44,7 +53,7 @@
     };
     setTimeout(() => {
         wordOfTheDay()
-    }, 100000)
+    }, 20000)
 
     useEffect(() => {
         searchWord();
@@ -86,13 +95,13 @@
                 </div>
                 </div>
                 <div className="border-2 border-gray-500 w-full text-left overflow-y-scroll max-h-[215px]">
-                <h2 className="mb-2.5">Meaning</h2>
+                <h2 className="font-bold text-lg">Meaning</h2>
                 <p>1.{dictionaryData[0].meanings[0].definitions[0].definition ? dictionaryData[0].meanings[0].definitions[0].definition : "None found"}</p>
                 <p>2.{dictionaryData[0].meanings[0].definitions[1] ? dictionaryData[0].meanings[0].definitions[1].definition : "No more definitions found"}</p>
-                <p>3.{dictionaryData[0].meanings[0].definitions[2] ? dictionaryData[0].meanings[0].definitions[2].definition : "No more definitions found"}</p>
-                <h2 className="mb-2.5">Example</h2>
-                <p>{dictionaryData[0].meanings[0].definitions[0].example ? dictionaryData[0].meanings[0].definitions[0].example : <span>No examples found</span>}</p>
-                <h2 className="mb-2.5">Synonyms</h2>
+                <p className="mb-2.5 ">3.{dictionaryData[0].meanings[0].definitions[2] ? dictionaryData[0].meanings[0].definitions[2].definition : "No more definitions found"}</p>
+                <h2 className="text-lg font-bold">Example</h2>
+                <p className="mb-2.5">{dictionaryData[0].meanings[0].definitions[0].example ? dictionaryData[0].meanings[0].definitions[0].example : <span>No examples found</span>}</p>
+                <h2 className="text-lg font-bold">Synonyms</h2>
                 <div className="flex flex-wrap">
                     {dictionaryData[0].meanings[0].synonyms.length > 0 ? dictionaryData[0].meanings[0].synonyms.map((synonym,index) => (
                        
