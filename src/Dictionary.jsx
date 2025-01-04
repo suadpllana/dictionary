@@ -51,13 +51,22 @@
         const randomIndex = Math.floor(Math.random() * words.length)
         setWord(words[randomIndex])
     };
-    setTimeout(() => {
-        wordOfTheDay()
-    }, 20000)
 
     useEffect(() => {
-        searchWord();
-    }, []);
+        const intervalId = setTimeout(() => {
+            wordOfTheDay();
+        }, 20000);
+    
+        return () => {
+            clearTimeout(intervalId);
+        };
+    }, [word]);
+    
+    
+ 
+  
+
+
 
     return (
         <div>
