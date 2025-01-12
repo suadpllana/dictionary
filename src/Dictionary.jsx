@@ -4,16 +4,23 @@
 
     const Dictionary = () => {
     const [dictionaryData, setDictionaryData] = useState([]);
+    
     const [word , setWord] = useState(() => {
         const savedWord = localStorage.getItem("dictionaryWord")
         return savedWord ? JSON.parse(savedWord) : ""
     })
+    const [savedWordsArr , setSavedWords] = useState(() => {
+        const savedWords = localStorage.getItem("SavedWordDictionary");
+        return savedWords ? JSON.parse(savedWords) : []
+    })
+    useEffect(() => {
+        localStorage.setItem("SavedWordDictionary" , JSON.stringify(savedWordsArr))
+    } , [savedWordsArr])
 
     useEffect(() => {
         localStorage.setItem("dictionaryWord" , JSON.stringify(word) )
     } , [word])
 
-       
     const inputRef = useRef(null);
     const [error, setError] = useState("")
 
@@ -46,6 +53,23 @@
             searchWord()
         }
     }
+    function saveWord(){
+        const isAlreadySaved = savedWordsArr.some(word => word.word === dictionaryData[0].word);
+
+        if(isAlreadySaved){
+            return
+        }
+        else{
+            setSavedWords((prev) => [
+                ...prev , {
+                    id: Math.random(),
+                    word: dictionaryData[0].word
+    
+                }
+            ])
+        }
+        
+    }
 
     const wordOfTheDay = () => {
         const randomIndex = Math.floor(Math.random() * words.length)
@@ -64,7 +88,10 @@
     
     
  
-  
+  function deleteWordById(id){
+    const filteredWords = savedWordsArr.filter(word => word.id !== id);
+    setSavedWords(filteredWords)
+  }
 
 
 
@@ -118,7 +145,10 @@
                        
                
                     )) : <span>No synonyms Found</span>}
+
+                   
                      </div>
+                     <button onClick={saveWord} className="bookmark-button">Bookmark Word</button>
                 </div>
                 
             </>
@@ -126,6 +156,15 @@
             <></>
             )}
         </div>
+        
+       
+            <div className="savedWordsContainer">
+            <h1>Saved words</h1>
+            <p>(Click the word to delete it)</p>
+                {savedWordsArr.map((word) => (
+                    <span className="savedWord" onClick={() => deleteWordById(word.id)} key={word.id}>{word.word}, </span>
+                ))}
+            </div>
         </div>
     );
     };

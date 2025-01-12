@@ -6,7 +6,27 @@ body{
     background-color: rgb(201, 189, 189);
     font-family: cursive, Arial, Helvetica, sans-serif;
 }
+.bookmark-button{
+    background-color: cornflowerblue;
+    margin-left: 40%;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.bookmark-button:hover{
+    opacity: 0.7;
+}
+.savedWordsContainer{
+    position: absolute;
+    top: 30px;
+    left: 30px;
 
+}
+.savedWord{
+    cursor: pointer;
+}
+.savedWord:hover{
+    opacity: 0.7;
+}
 @media (max-width: 767px){
     body{
         font-family: Arial, Helvetica, sans-serif;
